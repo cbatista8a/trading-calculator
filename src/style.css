@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  body {
+    @apply bg-gray-50 min-h-screen;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200
+           bg-gray-50/50 text-gray-700 placeholder-gray-400
+           focus:outline-none focus:ring-2 focus:ring-blue-500/20
+           focus:border-blue-500 focus:bg-white
+           transition-all duration-200 ease-in-out
+           text-base font-medium;
+  }
+
+  .input-field::-webkit-inner-spin-button,
+  .input-field::-webkit-outer-spin-button {
+    @apply appearance-none;
+    margin: 0;
+  }
+
+  .form-group {
+    @apply relative flex flex-col gap-2 transition-all duration-200;
+  }
+
+  .form-label {
+    @apply text-sm font-semibold text-gray-700 tracking-wide
+           transition-all duration-200;
+  }
+
+  .form-label-addon {
+    @apply absolute right-3 top-[2.1rem] text-sm text-gray-400 pointer-events-none;
+  }
+
+  .result-card {
+    @apply bg-white rounded-2xl shadow-lg p-6 space-y-4
+           border border-gray-100/50 backdrop-blur-sm;
+  }
+
+  .result-row {
+    @apply flex justify-between items-center py-3
+           border-b border-gray-100 last:border-0
+           hover:bg-gray-50/50 transition-colors duration-200
+           rounded-lg px-2;
+  }
+
+  .result-label {
+    @apply text-sm font-medium text-gray-600;
+  }
+
+  .result-value {
+    @apply font-semibold tracking-wide;
+  }
+}

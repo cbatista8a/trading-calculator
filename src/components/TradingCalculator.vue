@@ -1,0 +1,260 @@
+<template>
+  <div class="max-w-xl mx-auto px-4 py-8 md:px-6 w-full">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+      Calculadora de Trading
+    </h2>
+
+    <div class="space-y-6 bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
+      <div class="grid gap-6 md:grid-cols-2">
+        <div class="form-group">
+          <label class="form-label" for="initialCapital">
+            Capital Inicial
+          </label>
+          <input
+            type="number"
+            id="initialCapital"
+            v-model.number="initialCapital"
+            @input="calculate"
+            class="input-field"
+            placeholder="5000"
+          >
+          <span class="form-label-addon">$</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="riskPercentage">
+            Riesgo Total
+          </label>
+          <input
+            type="number"
+            id="riskPercentage"
+            v-model.number="riskTotalPercentage"
+            @input="calculate"
+            step="0.01"
+            class="input-field"
+            placeholder="1.00"
+          >
+          <span class="form-label-addon">%</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="riskOperationPercentage">
+            Stop Loss (SL)
+          </label>
+          <input
+            type="number"
+            id="riskOperationPercentage"
+            v-model.number="riskOperationPercentage"
+            @input="calculate"
+            step="0.01"
+            class="input-field"
+            placeholder="0.70"
+          >
+          <span class="form-label-addon">%</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="rewardOperationPercentage">
+            Take Profit (TP)
+          </label>
+          <input
+            type="number"
+            id="rewardOperationPercentage"
+            v-model.number="rewardPercentage"
+            @input="calculate"
+            step="0.01"
+            class="input-field"
+            placeholder="0.90"
+          >
+          <span class="form-label-addon">%</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="riskRewardRatio">
+            Ratio R:R
+          </label>
+          <input
+            type="number"
+            id="riskRewardRatio"
+            v-model.number="riskRewardRatio"
+            @input="calculate"
+            step="0.1"
+            class="input-field"
+            placeholder="1.5"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="breakEvenPercentage">
+            BreakEven
+          </label>
+          <input
+            type="number"
+            id="breakEvenPercentage"
+            v-model.number="breakEvenPercentage"
+            @input="calculate"
+            step="0.01"
+            class="input-field"
+            placeholder="0.60"
+          >
+          <span class="form-label-addon">%</span>
+        </div>
+
+        <div class="form-group md:col-span-2">
+          <label class="form-label" for="stockPrice">
+            Precio de Entrada
+          </label>
+          <input
+            type="number"
+            id="stockPrice"
+            v-model.number="stockPrice"
+            @input="calculate"
+            step="0.01"
+            class="input-field"
+            placeholder="260.00"
+          >
+          <span class="form-label-addon">$</span>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="hasValidInputs"
+         class="result-card transform transition-all duration-300 hover:shadow-2xl">
+      <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+        <span>Resultados</span>
+        <span class="text-sm font-normal text-gray-400">(Estimados)</span>
+      </h3>
+
+      <div class="space-y-6">
+        <!-- Lotaje Recomendado (destacado arriba) -->
+        <div class="result-row bg-blue-50/50 p-4 rounded-xl">
+          <span class="result-label text-lg">Lotaje Recomendado</span>
+          <span class="result-value text-3xl font-bold text-blue-600">
+            {{ lotSize.toFixed(0) }}
+          </span>
+        </div>
+
+        <!-- Grid de resultados en 2 columnas -->
+        <div class="grid gap-4 md:grid-cols-2">
+          <!-- Riesgo Total y Riesgo por Acción -->
+          <div class="result-row">
+            <span class="result-label">Riesgo Total</span>
+            <span class="result-value text-blue-600">
+              ${{ riskTotalAmount.toFixed(2) }}
+            </span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Riesgo por Acción</span>
+            <span class="result-value text-blue-600">
+              ${{ riskPerAction.toFixed(2) }}
+            </span>
+          </div>
+
+          <!-- Stop Loss y Take Profit -->
+          <div class="result-row">
+            <span class="result-label">Stop Loss</span>
+            <div class="flex flex-col items-end">
+              <span class="result-value text-red-600">${{ stopLoss.toFixed(2) }}</span>
+              <span class="text-xs text-gray-400">{{ riskPerAction.toFixed(2) }} points</span>
+            </div>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Take Profit</span>
+            <div class="flex flex-col items-end">
+              <span class="result-value text-green-600">${{ takeProfit.toFixed(2) }}</span>
+              <span class="text-xs text-gray-400">{{ takeProfitPoints.toFixed(2) }} points</span>
+            </div>
+          </div>
+
+          <!-- TP con R/R y BreakEven -->
+          <div class="result-row">
+            <span class="result-label">Take Profit (R:R)</span>
+            <div class="flex flex-col items-end">
+              <span class="result-value text-green-600">${{ takeProfitRRBased.toFixed(2) }}</span>
+              <span class="text-xs text-gray-400">{{ riskRewardRatio.toFixed(1) }}:1</span>
+            </div>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">BreakEven</span>
+            <span class="result-value text-blue-600">
+              ${{ breakEvenPoint.toFixed(2) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'TradingCalculator',
+  data() {
+    return {
+      initialCapital: 5000,
+      riskTotalPercentage: 1, // Porcentaje de riesgo total del capital
+      riskOperationPercentage: 0.70, // Porcentaje de riesgo por operación para SL
+      rewardPercentage: 0.90, // Porcentaje de recompensa por operación para TP
+      riskRewardRatio: 1.5,
+      stockPrice: 260,
+      breakEvenPercentage: 0.60,
+      riskTotalAmount: 0,
+      riskPerAction: 0,
+      stopLoss: 0,
+      takeProfit: 0,
+      takeProfitPoints: 0,
+      takeProfitRRBased: 0,
+      breakEvenPoint: 0,
+      lotSize: 0
+    }
+  },
+  computed: {
+    hasValidInputs() {
+      return this.initialCapital > 0 &&
+             this.riskTotalPercentage > 0 &&
+             this.riskOperationPercentage > 0 &&
+             this.riskRewardRatio > 0 &&
+             this.stockPrice > 0 &&
+             this.breakEvenPercentage > 0;
+    }
+  },
+  methods: {
+    calculate() {
+      if (!this.hasValidInputs) return;
+
+      // Calcular riesgo total en dinero
+      this.riskTotalAmount = this.initialCapital * (this.riskTotalPercentage / 100);
+
+      // Calcular riesgo por acción en puntos
+      this.riskPerAction = this.stockPrice * (this.riskOperationPercentage / 100);
+
+      // Calcular Stop Loss (precio de entrada - riesgo por acción en puntos)
+      this.stopLoss = this.stockPrice - this.riskPerAction;
+
+      this.takeProfit = this.stockPrice * (1 + this.rewardPercentage / 100);
+
+      this.takeProfitPoints = this.takeProfit - this.stockPrice;
+
+
+      // Calcular Take Profit basado en el ratio riesgo/beneficio
+      this.takeProfitRRBased = this.stockPrice + (this.riskPerAction * this.riskRewardRatio);
+
+      // Calcular punto de BreakEven
+      this.breakEvenPoint = this.stockPrice * (1 + this.breakEvenPercentage / 100);
+
+      // Calcular Lotaje
+      this.lotSize = this.riskTotalAmount / this.riskPerAction;
+    }
+  },
+  mounted() {
+    this.calculate();
+  }
+}
+</script>
+
+<style>
+/* Tailwind classes are being used instead of scoped styles */
+</style>
