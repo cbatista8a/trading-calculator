@@ -1,10 +1,17 @@
 <script setup>
-import TradingCalculator from './components/TradingCalculator.vue'
+import Navigation from './components/Navigation.vue'
 </script>
 
 <template>
   <div>
-    <TradingCalculator />
+    <Navigation />
+    <main class="min-h-screen">
+      <router-view v-slot="{ Component }">
+        <Transition name="fade" mode="out-in">
+          <component :is="Component" :key="$route.path" />
+        </Transition>
+      </router-view>
+    </main>
   </div>
 </template>
 
@@ -28,6 +35,17 @@ body {
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+}
+
+/* Transición de páginas */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
