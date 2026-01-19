@@ -2,7 +2,6 @@
   <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
     <div class="max-w-7xl mx-auto px-6 py-12">
       <div class="bg-white rounded-lg shadow-lg p-8">
-        <h1 class="text-4xl font-bold text-slate-800 mb-4">🎯 Trading Calculator</h1>
         <p class="text-lg text-slate-600 mb-8">
           Bienvenido a tu plataforma de trading. Selecciona un módulo del menú para comenzar.
         </p>
@@ -13,17 +12,17 @@
             class="group p-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer"
           >
             <div class="text-white">
-              <h2 class="text-2xl font-bold mb-2">📊 Trading Calculator</h2>
+              <h2 class="text-2xl font-bold mb-2">📊 Stock Calculator</h2>
               <p class="text-blue-100">Calcula posiciones, ratios de riesgo/recompensa y gestión de capital</p>
             </div>
           </router-link>
 
           <router-link
-            to="/trading-schedule-italy"
+            to="/trading-timing"
             class="group p-6 bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer"
           >
             <div class="text-white">
-              <h2 class="text-2xl font-bold mb-2">🕐 Trading Schedule Italy</h2>
+              <h2 class="text-2xl font-bold mb-2">🕐 Timing</h2>
               <p class="text-green-100">Plan de trading por horarios y sesiones de mercado</p>
             </div>
           </router-link>

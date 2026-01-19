@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import TradingCalculator from '../components/TradingCalculator.vue';
-import TradingScheduleItaly from '../components/TradingScheduleItaly.vue';
+import TradingTiming from '../components/TradingTiming.vue';
 import Home from '../pages/Home.vue';
 import Checklist from '../pages/Checklist.vue';
 
@@ -16,9 +16,9 @@ const routes = [
     component: TradingCalculator
   },
   {
-    path: '/trading-schedule-italy',
-    name: 'Trading Schedule Italy',
-    component: TradingScheduleItaly
+    path: '/trading-timing',
+    name: 'Trading Timing',
+    component: TradingTiming
   },
   {
     path: '/checklist',

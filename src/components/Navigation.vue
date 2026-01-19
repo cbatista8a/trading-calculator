@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between gap-6">
         <!-- Logo / Home Link -->
         <router-link to="/" class="flex items-center gap-2 text-white hover:text-indigo-300 transition-colors">
-          <span class="text-2xl font-bold">📈 Trading App</span>
+          <span class="text-2xl font-bold">📈 Trading Advisor</span>
         </router-link>
 
         <!-- Navigation Menu -->
@@ -66,7 +66,7 @@ const isMobileMenuOpen = ref(false);
 const navigationRoutes = [
   { path: '/', label: 'Home', icon: '🏠' },
   { path: '/trading-calculator', label: 'Calculator', icon: '📊' },
-  { path: '/trading-schedule-italy', label: 'Schedule', icon: '🕐' },
+  { path: '/trading-timing', label: 'Timing', icon: '🕐' },
   { path: '/checklist', label: 'Checklist', icon: '📋' }
 ];
 
