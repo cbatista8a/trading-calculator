@@ -1,0 +1,492 @@
+{
+  "markets": [
+    {
+      "id": "forex_london",
+      "name": "Forex - Sesión Londres",
+      "type": "forex",
+      "icon": "🇬🇧",
+      "timezone": "GMT",
+      "openTime": "08:00",
+      "closeTime": "17:00",
+      "description": "Sesión de Londres - Mayor liquidez en pares EUR, GBP",
+      "assetsByType": {
+        "forex": [
+          {
+            "name": "GBP/USD",
+            "volatility": 9.8,
+            "avgPips": "60-100 pips",
+            "whyGood": "Máximo volumen en horario Londres, movimientos claros",
+            "rrPotential": "1:3.0 - 1:4.0",
+            "tips": "Muy volátil, amplía SL 10-15 pips. Ideal para RR altos."
+          },
+          {
+            "name": "EUR/USD",
+            "volatility": 9.2,
+            "avgPips": "40-70 pips",
+            "whyGood": "Mayor volumen del día, spread bajo, overlaps Europa-Londres",
+            "rrPotential": "1:2.5 - 1:3.5",
+            "tips": "Espera confirmación post-apertura Londres. Evita primeros 15min por volatilidad extrema."
+          },
+          {
+            "name": "EUR/GBP",
+            "volatility": 8.5,
+            "avgPips": "50-80 pips",
+            "whyGood": "Puro play Europa, ambas monedas en máxima actividad",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Spread relativamente bajo durante peak."
+          },
+          {
+            "name": "USD/CHF",
+            "volatility": 7.8,
+            "avgPips": "35-60 pips",
+            "whyGood": "Activo en horario Europa, menos volátil que otros",
+            "rrPotential": "1:2.0 - 1:2.8",
+            "tips": "Buena alternativa para traders conservadores."
+          },
+          {
+            "name": "GBP/JPY",
+            "volatility": 9.5,
+            "avgPips": "80-120 pips",
+            "whyGood": "Volatilidad alta, overlap Londres-Asia",
+            "rrPotential": "1:2.5 - 1:4.0",
+            "tips": "Alto carry trade, se mueve con sentimiento de riesgo."
+          },
+          {
+            "name": "USD/JPY",
+            "volatility": 8.1,
+            "avgPips": "50-80 pips",
+            "whyGood": "Pair seguro, impacto noticias económicas",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Safe haven en momentos de estrés."
+          },
+          {
+            "name": "AUD/USD",
+            "volatility": 8.2,
+            "avgPips": "50-80 pips",
+            "whyGood": "Commodities correlacionado, buena liquidez",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Correlación fuerte con oro y cobre."
+          },
+          {
+            "name": "NZD/USD",
+            "volatility": 8.0,
+            "avgPips": "45-75 pips",
+            "whyGood": "Similar a AUD pero más predecible",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Safer than AUD para traders conservadores."
+          },
+          {
+            "name": "USD/CAD",
+            "volatility": 8.8,
+            "avgPips": "60-100 pips",
+            "whyGood": "Correlación con petróleo WTI",
+            "rrPotential": "1:2.5 - 1:3.5",
+            "tips": "Monitorea noticias de energía/petróleo."
+          },
+          {
+            "name": "EUR/CHF",
+            "volatility": 7.5,
+            "avgPips": "40-70 pips",
+            "whyGood": "Puro play Europa, menos volátil",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Buena alternativa conservadora."
+          }
+        ],
+        "indices": [
+          {
+            "name": "DAX (GER40)",
+            "volatility": 8.8,
+            "avgPips": "80-150 puntos",
+            "whyGood": "Máxima volatilidad en apertura Frankfurt, blue chips alemanes",
+            "rrPotential": "1:2.5 - 1:3.5",
+            "tips": "Primeros 30min muy volátil. Excelente para breakouts."
+          },
+          {
+            "name": "FTSE 100 (UK100)",
+            "volatility": 8.2,
+            "avgPips": "60-120 puntos",
+            "whyGood": "Máxima actividad con apertura Londres",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Blue chip stocks, tendencias claras."
+          },
+          {
+            "name": "CAC 40 (FRA40)",
+            "volatility": 8.0,
+            "avgPips": "70-130 puntos",
+            "whyGood": "Correlación alta con DAX, buena alternativa",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Menos volátil que DAX pero correlacionado."
+          }
+        ]
+      }
+    },
+    {
+      "id": "forex_newyork",
+      "name": "Forex - Sesión Nueva York",
+      "type": "forex",
+      "icon": "🗽",
+      "timezone": "EST",
+      "openTime": "13:00",
+      "closeTime": "22:00",
+      "description": "Sesión de Nueva York - Máxima liquidez y volatilidad",
+      "assetsByType": {
+        "forex": [
+          {
+            "name": "EUR/USD",
+            "volatility": 9.0,
+            "avgPips": "50-90 pips",
+            "whyGood": "Apertura USA mantiene volatilidad, overlap máximo",
+            "rrPotential": "1:2.5 - 1:3.5",
+            "tips": "Buenas oportunidades después de datos USA."
+          },
+          {
+            "name": "GBP/JPY",
+            "volatility": 9.7,
+            "avgPips": "80-150 pips",
+            "whyGood": "Overlap Londres-NY, movimientos explosivos",
+            "rrPotential": "1:3.0 - 1:5.0",
+            "tips": "⚠️ Solo para traders experimentados. SL amplios."
+          },
+          {
+            "name": "USD/CAD",
+            "volatility": 8.8,
+            "avgPips": "60-100 pips",
+            "whyGood": "Correlación con petróleo WTI, activo con apertura USA",
+            "rrPotential": "1:2.5 - 1:3.5",
+            "tips": "Monitorea noticias de energía/petróleo."
+          },
+          {
+            "name": "AUD/USD",
+            "volatility": 8.2,
+            "avgPips": "50-80 pips",
+            "whyGood": "Activo con inicio de sesión USA, commodities",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Correlación fuerte con oro y cobre."
+          },
+          {
+            "name": "NZD/USD",
+            "volatility": 8.0,
+            "avgPips": "45-75 pips",
+            "whyGood": "Similar a AUD pero más predecible",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Safer than AUD para traders conservadores."
+          },
+          {
+            "name": "USD/JPY",
+            "volatility": 8.3,
+            "avgPips": "60-90 pips",
+            "whyGood": "Volatilidad sostenida con sesión USA",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Safe haven en momentos de estrés."
+          },
+          {
+            "name": "GBP/USD",
+            "volatility": 9.2,
+            "avgPips": "70-110 pips",
+            "whyGood": "Sobreposición Londres-NY mantiene volatilidad alta",
+            "rrPotential": "1:3.0 - 1:4.0",
+            "tips": "Amplía SL 10-15 pips en overlay."
+          },
+          {
+            "name": "USD/CHF",
+            "volatility": 7.8,
+            "avgPips": "50-80 pips",
+            "whyGood": "Safe haven menos volátil",
+            "rrPotential": "1:2.0 - 1:2.8",
+            "tips": "Buena alternativa conservadora."
+          },
+          {
+            "name": "EUR/GBP",
+            "volatility": 8.3,
+            "avgPips": "50-80 pips",
+            "whyGood": "Overlap mantenido, ambas monedas activas",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Spreads relativamente estables."
+          },
+          {
+            "name": "GBP/CHF",
+            "volatility": 8.6,
+            "avgPips": "60-100 pips",
+            "whyGood": "Alto carry trade, volatilidad media-alta",
+            "rrPotential": "1:2.5 - 1:3.5",
+            "tips": "Movimientos rápidos pero predecibles."
+          }
+        ],
+        "indices": [
+          {
+            "name": "NAS100",
+            "volatility": 9.6,
+            "avgPips": "150-250 puntos",
+            "whyGood": "Apertura USA = máxima volatilidad, tendencias claras",
+            "rrPotential": "1:2.5 - 1:4.0",
+            "tips": "Espera setup completo antes de entrar. Posible gap."
+          },
+          {
+            "name": "US30 (Dow Jones)",
+            "volatility": 8.5,
+            "avgPips": "120-200 puntos",
+            "whyGood": "Menos volátil que NAS100, blue chips",
+            "rrPotential": "1:2.0 - 1:3.5",
+            "tips": "Buena alternativa a Nasdaq, movimientos más estables."
+          },
+          {
+            "name": "US500 (S&P500)",
+            "volatility": 8.3,
+            "avgPips": "100-180 puntos",
+            "whyGood": "Índice más amplio, equilibrio riesgo-recompensa",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Tendencias más confiables que Nasdaq."
+          }
+        ]
+      }
+    },
+    {
+      "id": "crypto_24h",
+      "name": "Criptomonedas - 24/7",
+      "type": "crypto",
+      "icon": "₿",
+      "timezone": "24H",
+      "openTime": "00:00",
+      "closeTime": "23:59",
+      "description": "Mercado de criptomonedas - Abierto 24/7, sin gaps",
+      "assetsByType": {
+        "crypto": [
+          {
+            "name": "BTC/USDT",
+            "volatility": 9.1,
+            "avgPips": "200-400 movimiento",
+            "whyGood": "24/7, sin gaps, volatilidad constante, máxima liquidez",
+            "rrPotential": "1:2.0 - 1:3.5",
+            "tips": "Usa M5 o M15. Spreads estables. Ideal para horarios flexibles."
+          },
+          {
+            "name": "ETH/USDT",
+            "volatility": 8.8,
+            "avgPips": "20-40 movimiento",
+            "whyGood": "Alternativa crypto con buena liquidez",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Correlación fuerte con BTC, ciclos altcoin."
+          },
+          {
+            "name": "SOL/USDT",
+            "volatility": 8.5,
+            "avgPips": "1-3 movimiento",
+            "whyGood": "Altcoin mayor capitalización",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Volatilidad media-alta en crypto."
+          },
+          {
+            "name": "XRP/USDT",
+            "volatility": 8.2,
+            "avgPips": "5-10 movimiento",
+            "whyGood": "Altcoin volátil, buena liquidez",
+            "rrPotential": "1:1.5 - 1:2.5",
+            "tips": "Más riesgoso, movimientos rápidos."
+          },
+          {
+            "name": "ADA/USDT",
+            "volatility": 8.0,
+            "avgPips": "2-5 movimiento",
+            "whyGood": "Stablecoin con buena capitalización",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Menos volátil que XRP."
+          },
+          {
+            "name": "AVAX/USDT",
+            "volatility": 8.3,
+            "avgPips": "2-4 movimiento",
+            "whyGood": "Layer 1 con volatilidad interessante",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Ciclos altcoin moderados."
+          },
+          {
+            "name": "LINK/USDT",
+            "volatility": 8.1,
+            "avgPips": "1-3 movimiento",
+            "whyGood": "Oracle chain, caso de uso fuerte",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Menos volátil pero estable."
+          },
+          {
+            "name": "BNB/USDT",
+            "volatility": 8.4,
+            "avgPips": "10-20 movimiento",
+            "whyGood": "Token de exchange con alta liquidez",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Correlación con ritmo del mercado general."
+          },
+          {
+            "name": "DOGE/USDT",
+            "volatility": 8.6,
+            "avgPips": "0.5-1 movimiento",
+            "whyGood": "High volatility meme coin",
+            "rrPotential": "1:2.0 - 1:3.5",
+            "tips": "⚠️ Muy volátil, riesgoso pero potencial alto."
+          },
+          {
+            "name": "MATIC/USDT",
+            "volatility": 8.2,
+            "avgPips": "1-2 movimiento",
+            "whyGood": "Layer 2 escalability play",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Ciclos altcoin moderados."
+          }
+        ]
+      }
+    },
+    {
+      "id": "commodities_asia",
+      "name": "Commodities - Sesión Asia",
+      "type": "commodities",
+      "icon": "🏦",
+      "timezone": "JST",
+      "openTime": "08:00",
+      "closeTime": "15:00",
+      "description": "Sesión Asia - Metales y energía",
+      "assetsByType": {
+        "commodities": [
+          {
+            "name": "GOLD (Oro)",
+            "volatility": 8.3,
+            "avgPips": "$3-8 por onza",
+            "whyGood": "Safe haven, máxima actividad sesión Asia",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Correlación inversa con USD."
+          },
+          {
+            "name": "SILVER (Plata)",
+            "volatility": 8.5,
+            "avgPips": "$0.20-0.50 por onza",
+            "whyGood": "Más volátil que oro, industrial",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Ciclos similares a oro pero más volátil."
+          },
+          {
+            "name": "COPPER (Cobre)",
+            "volatility": 8.2,
+            "avgPips": "$0.05-0.15 por libra",
+            "whyGood": "Industrial, sentimiento económico",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Correlación con AUD y China."
+          },
+          {
+            "name": "WTI (Petróleo USA)",
+            "volatility": 8.1,
+            "avgPips": "$0.50-1.50 por barril",
+            "whyGood": "Energy, geopolítica",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Correlación con USD/CAD."
+          },
+          {
+            "name": "BRENT (Petróleo Brent)",
+            "volatility": 8.0,
+            "avgPips": "$0.50-1.50 por barril",
+            "whyGood": "Energy global, benchmark",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Similar a WTI pero menos volátil."
+          },
+          {
+            "name": "NATGAS (Gas Natural)",
+            "volatility": 9.0,
+            "avgPips": "$0.05-0.20 por MMBtu",
+            "whyGood": "Extremadamente volátil",
+            "rrPotential": "1:2.5 - 1:4.0",
+            "tips": "⚠️ Muy riesgoso, solo para expertos."
+          },
+          {
+            "name": "CORN (Maíz)",
+            "volatility": 7.8,
+            "avgPips": "$0.05-0.15 por bushel",
+            "whyGood": "Agrícola, estacionalidad",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Impactado por clima y ciclos."
+          },
+          {
+            "name": "WHEAT (Trigo)",
+            "volatility": 8.1,
+            "avgPips": "$0.10-0.30 por bushel",
+            "whyGood": "Agrícola, geopolítica",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Impacto de conflictos geopolíticos."
+          },
+          {
+            "name": "SOYBEANS (Soya)",
+            "volatility": 7.9,
+            "avgPips": "$0.10-0.25 por bushel",
+            "whyGood": "Agrícola, impacto clima",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Correlación con USD."
+          },
+          {
+            "name": "COCOA (Cacao)",
+            "volatility": 8.2,
+            "avgPips": "$20-50 por tonelada",
+            "whyGood": "Soft commodity, climate sensitive",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Estacional, impactado por clima."
+          }
+        ]
+      }
+    },
+    {
+      "id": "indices_asia",
+      "name": "Índices - Sesión Asia",
+      "type": "indices",
+      "icon": "📊",
+      "timezone": "JST",
+      "openTime": "09:00",
+      "closeTime": "15:00",
+      "description": "Índices asiáticos - Nikkei, Shanghai, Hang Seng",
+      "assetsByType": {
+        "indices": [
+          {
+            "name": "NIKKEI 225 (JPN225)",
+            "volatility": 8.2,
+            "avgPips": "150-300 puntos",
+            "whyGood": "Apertura Tokio, mercado más grande Asia",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Fuerte correlación con sentimiento global."
+          },
+          {
+            "name": "HANG SENG (HK50)",
+            "volatility": 8.5,
+            "avgPips": "100-250 puntos",
+            "whyGood": "Hong Kong, China tech exposure",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Volatilidad política, expuesto a China."
+          },
+          {
+            "name": "SHANGHAI (SHCOMP)",
+            "volatility": 8.3,
+            "avgPips": "50-150 puntos",
+            "whyGood": "China mainland, mercado masivo",
+            "rrPotential": "1:2.0 - 1:3.0",
+            "tips": "Regulación china puede ser restrictiva."
+          }
+        ]
+      }
+    },
+    {
+      "id": "indices_sydney",
+      "name": "Índices - Sesión Sydney",
+      "type": "indices",
+      "icon": "🇦🇺",
+      "timezone": "AEDT",
+      "openTime": "10:00",
+      "closeTime": "16:00",
+      "description": "Índices australianos - ASX 200",
+      "assetsByType": {
+        "indices": [
+          {
+            "name": "ASX 200",
+            "volatility": 7.8,
+            "avgPips": "100-200 puntos",
+            "whyGood": "Primera sesión global, commodities exposure",
+            "rrPotential": "1:2.0 - 1:2.5",
+            "tips": "Commodities impactan fuertemente."
+          }
+        ]
+      }
+    }
+  ]
+}

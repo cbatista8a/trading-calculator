@@ -46,7 +46,7 @@ const checklistSections = [
       { id: 1, text: 'Identifica tu sesión horaria disponible', isWarning: false },
       { id: 2, text: 'Revisa calendario económico (noticias high-impact)', isWarning: false },
       { id: 3, text: 'Confirma los 2 assets a vigilar', isWarning: false },
-      { id: 4, text: 'Define tu RR mínimo del día (1:2.5+)', isWarning: false }
+      { id: 4, text: 'Define tu RR mínimo del día (1:2+)', isWarning: false }
     ]
   }
 ];
@@ -59,9 +59,9 @@ const anxietySections = [
     titleClass: 'text-yellow-900',
     items: [
       { id: 1, text: 'Si después de 1 hora no hay setup válido: cierra la plataforma. El mercado estará ahí mañana', isWarning: true },
-      { id: 2, text: 'Si encuentras setup pero RR < 1:2.5: recházalo y siéntete orgulloso de tu disciplina', isWarning: true },
+      { id: 2, text: 'Si encuentras setup pero el RR no respeta tu objetivo: recházalo y siéntete orgulloso de tu disciplina', isWarning: true },
       { id: 3, text: 'Máximo 2 trades por sesión. Si pierdes 2, cierra hasta la próxima sesión', isWarning: true },
-      { id: 4, text: 'Recordatorio: Tu problema fue overtrading, NO falta de oportunidades. Menos es más', isWarning: true }
+      { id: 4, text: 'Recordatorio: No caer en overtrading. Menos es más', isWarning: true }
     ]
   }
 ];

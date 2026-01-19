@@ -1,0 +1,76 @@
+{
+  "timezones": [
+    {
+      "id": "utc",
+      "name": "UTC / GMT",
+      "offset": 0,
+      "region": "Europa"
+    },
+    {
+      "id": "cet",
+      "name": "CET (UTC+1)",
+      "offset": 1,
+      "region": "Europa Central"
+    },
+    {
+      "id": "est",
+      "name": "EST (UTC-5)",
+      "offset": -5,
+      "region": "América del Norte"
+    },
+    {
+      "id": "cst",
+      "name": "CST (UTC-6)",
+      "offset": -6,
+      "region": "América del Norte"
+    },
+    {
+      "id": "mst",
+      "name": "MST (UTC-7)",
+      "offset": -7,
+      "region": "América del Norte"
+    },
+    {
+      "id": "pst",
+      "name": "PST (UTC-8)",
+      "offset": -8,
+      "region": "América del Norte"
+    },
+    {
+      "id": "gmt",
+      "name": "GMT (UTC+0) - Londres",
+      "offset": 0,
+      "region": "Reino Unido"
+    },
+    {
+      "id": "aet",
+      "name": "AET (UTC+10)",
+      "offset": 10,
+      "region": "Australia Oriental"
+    },
+    {
+      "id": "jst",
+      "name": "JST (UTC+9)",
+      "offset": 9,
+      "region": "Asia"
+    },
+    {
+      "id": "sgt",
+      "name": "SGT (UTC+8)",
+      "offset": 8,
+      "region": "Asia Sudeste"
+    },
+    {
+      "id": "ist",
+      "name": "IST (UTC+5:30)",
+      "offset": 5.5,
+      "region": "India"
+    },
+    {
+      "id": "uae",
+      "name": "GST (UTC+4)",
+      "offset": 4,
+      "region": "Medio Oriente"
+    }
+  ]
+}

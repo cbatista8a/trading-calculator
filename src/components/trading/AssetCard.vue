@@ -1,13 +1,25 @@
 <template>
-  <div class="border-2 border-green-300 rounded-lg p-5 bg-green-50">
+  <div :class="[isPrimary ? 'border-4 border-green-500 bg-green-50 shadow-lg' : 'border-2 border-green-300 bg-green-50', 'rounded-lg p-5']">
     <div class="flex items-start justify-between mb-3">
-      <div>
-        <h3 class="text-2xl font-bold text-green-900">{{ asset.name }}</h3>
-        <span class="text-sm text-green-600 font-semibold">{{ asset.type }}</span>
+      <div class="flex-1">
+        <div class="flex items-center gap-3">
+          <div v-if="rank" :class="[isPrimary ? 'text-2xl font-bold text-white w-8 h-8 flex items-center justify-center rounded-full' : 'text-lg font-bold text-green-700', isPrimary ? 'bg-green-600' : '']">
+            #{{ rank }}
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-green-900">{{ asset.name }}</h3>
+            <span class="text-sm text-green-600 font-semibold">{{ asset.type }}</span>
+          </div>
+        </div>
       </div>
-      <span :class="getVolatilityClass(asset.volatility)">
-        {{ asset.volatility }}
-      </span>
+      <div class="flex flex-col items-end gap-2">
+        <span :class="getVolatilityClass(asset.volatility)">
+          Vol: {{ (asset.volatility * 10).toFixed(0) }}%
+        </span>
+        <span v-if="isPrimary" class="px-2 py-1 bg-green-600 text-white text-xs font-bold rounded">
+          ⭐ PRINCIPAL
+        </span>
+      </div>
     </div>
 
     <div class="space-y-3">
@@ -44,17 +56,28 @@ defineProps({
   asset: {
     type: Object,
     required: true
+  },
+  isPrimary: {
+    type: Boolean,
+    default: false
+  },
+  rank: {
+    type: Number,
+    default: null
   }
 });
 
 const getVolatilityClass = (volatility) => {
   const baseClass = 'px-3 py-1 rounded-full text-xs font-bold';
-  const volatilityMap = {
-    'Extrema': `${baseClass} bg-red-600 text-white`,
-    'Muy Alta': `${baseClass} bg-orange-600 text-white`,
-    'Alta': `${baseClass} bg-yellow-600 text-white`,
-    'Media-Alta': `${baseClass} bg-blue-600 text-white`
-  };
-  return volatilityMap[volatility] || baseClass + ' bg-blue-600 text-white';
+
+  if (volatility >= 9.5) {
+    return `${baseClass} bg-red-600 text-white`;
+  } else if (volatility >= 9) {
+    return `${baseClass} bg-orange-600 text-white`;
+  } else if (volatility >= 8.5) {
+    return `${baseClass} bg-yellow-600 text-white`;
+  } else {
+    return `${baseClass} bg-blue-600 text-white`;
+  }
 };
 </script>
