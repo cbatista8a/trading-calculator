@@ -34,31 +34,6 @@
       :session="session"
     />
 
-    <!-- Pre-Session Checklist -->
-    <ChecklistCard />
-
-    <!-- Anxiety Management Section -->
-    <div class="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-6 mt-6">
-      <h2 class="text-xl font-bold text-yellow-900 mb-3">⚠️ Gestión de Ansiedad y Disciplina</h2>
-      <div class="space-y-3 text-sm text-yellow-900">
-        <div>
-          <span class="font-bold">Si después de 1 hora no hay setup válido:</span> Cierra la plataforma.
-          El mercado estará ahí mañana. No fuerces trades.
-        </div>
-        <div>
-          <span class="font-bold">Si encuentras setup pero RR &lt; 1:2.5:</span> Toma screenshot, anótalo en tu diario como "trade rechazado",
-          y siéntete ORGULLOSO de tu disciplina.
-        </div>
-        <div>
-          <span class="font-bold">Si pierdes un trade:</span> Máximo 2 trades por sesión. Si pierdes 2, cierra hasta la próxima sesión.
-        </div>
-        <div class="bg-yellow-100 p-3 rounded border border-yellow-400 mt-3">
-          <span class="font-bold text-red-700">Recordatorio:</span> Tu problema en FTMO fue overtrading y gestión de salidas,
-          NO falta de oportunidades. Menos es más.
-        </div>
-      </div>
-    </div>
-
     <!-- Executive Summary Table -->
     <div class="bg-white rounded-lg shadow-lg p-6 mt-6">
       <h2 class="text-2xl font-bold text-slate-800 mb-4">🎯 Resumen Ejecutivo</h2>
@@ -101,7 +76,6 @@
 </template>
 <script setup>
 import SessionCard from './trading/SessionCard.vue';
-import ChecklistCard from './trading/ChecklistCard.vue';
 
 const tradingSessions = {
   morning: {

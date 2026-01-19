@@ -1,24 +1,20 @@
 <template>
-  <div class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-2xl font-bold text-slate-800 mb-4">📋 Checklist Pre-Sesión (5 minutos)</h2>
+  <div :class="['rounded-lg shadow-lg p-6', bgClass]">
+    <h2 :class="['text-2xl font-bold mb-4', titleColorClass]">{{ title }}</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="border-2 border-blue-200 rounded-lg p-4">
-        <h3 class="font-bold text-blue-600 mb-3">Antes de Abrir Gráficos</h3>
+      <div
+        v-for="section in sections"
+        :key="section.id"
+        :class="['border-2 rounded-lg p-4', section.borderClass]"
+      >
+        <h3 :class="['font-bold mb-3', section.titleClass]">{{ section.title }}</h3>
         <div class="space-y-2 text-sm">
-          <ChecklistItem text="Identifica tu sesión horaria disponible" />
-          <ChecklistItem text="Revisa calendario económico (noticias high-impact)" />
-          <ChecklistItem text="Confirma los 2 assets a vigilar" />
-          <ChecklistItem text="Define tu RR mínimo del día (1:2.5+)" />
-        </div>
-      </div>
-
-      <div class="border-2 border-green-200 rounded-lg p-4">
-        <h3 class="font-bold text-green-600 mb-3">Al Abrir Gráficos</h3>
-        <div class="space-y-2 text-sm">
-          <ChecklistItem text="D1: Marca zonas Supply/Demand" />
-          <ChecklistItem text="H4: Confirma estructura y tendencia" />
-          <ChecklistItem text="H1: Busca confirmación de reversión" />
-          <ChecklistItem text="NO abrir otros assets por si acaso" :isWarning="true" />
+          <ChecklistItem
+            v-for="item in section.items"
+            :key="item.id"
+            :text="item.text"
+            :isWarning="item.isWarning"
+          />
         </div>
       </div>
     </div>
@@ -27,4 +23,31 @@
 
 <script setup>
 import ChecklistItem from './ChecklistItem.vue';
+
+defineProps({
+  title: {
+    type: String,
+    default: '📋 Checklist'
+  },
+  bgClass: {
+    type: String,
+    default: 'bg-white'
+  },
+  titleColorClass: {
+    type: String,
+    default: 'text-slate-800'
+  },
+  sections: {
+    type: Array,
+    required: true,
+    validator: (sections) => {
+      return sections.every(section =>
+        section.title &&
+        section.items &&
+        Array.isArray(section.items) &&
+        section.items.every(item => item.text)
+      );
+    }
+  }
+});
 </script>

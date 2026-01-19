@@ -66,7 +66,8 @@ const isMobileMenuOpen = ref(false);
 const navigationRoutes = [
   { path: '/', label: 'Home', icon: '🏠' },
   { path: '/trading-calculator', label: 'Calculator', icon: '📊' },
-  { path: '/trading-schedule-italy', label: 'Schedule', icon: '🕐' }
+  { path: '/trading-schedule-italy', label: 'Schedule', icon: '🕐' },
+  { path: '/checklist', label: 'Checklist', icon: '📋' }
 ];
 
 const isActive = (path) => {
