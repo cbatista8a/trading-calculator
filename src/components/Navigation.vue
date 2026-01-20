@@ -64,7 +64,6 @@ const route = useRoute();
 const isMobileMenuOpen = ref(false);
 
 const navigationRoutes = [
-  { path: '/', label: 'Home', icon: '🏠' },
   { path: '/trading-calculator', label: 'Calculator', icon: '📊' },
   { path: '/trading-timing', label: 'Timing', icon: '🕐' },
   { path: '/checklist', label: 'Checklist', icon: '📋' }
