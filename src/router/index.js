@@ -3,6 +3,7 @@ import TradingCalculator from '../components/TradingCalculator.vue';
 import TradingTiming from '../components/TradingTiming.vue';
 import Home from '../pages/Home.vue';
 import Checklist from '../pages/Checklist.vue';
+import Strategies from '../pages/Strategies.vue';
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: '/trading-timing',
     name: 'Trading Timing',
     component: TradingTiming
+  },
+  {
+    path: '/strategies',
+    name: 'Strategies',
+    component: Strategies
   },
   {
     path: '/checklist',

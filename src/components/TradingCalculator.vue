@@ -4,6 +4,13 @@
       Calculadora de Trading
     </h2>
 
+    <!-- Estrategia Predeterminada Activa -->
+    <div v-if="defaultStrategy" class="bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-300 rounded-lg p-4 mb-6">
+      <p class="text-xs font-semibold text-indigo-700 mb-1">📈 ESTRATEGIA ACTIVA</p>
+      <p class="text-sm font-bold text-indigo-900">{{ defaultStrategy.name }}</p>
+      <p class="text-xs text-indigo-800 mt-1">{{ defaultStrategy.steps.length }} pasos - <router-link to="/strategies" class="font-semibold hover:underline">Ver estrategia</router-link></p>
+    </div>
+
     <div class="space-y-6 bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
       <div class="grid gap-6 md:grid-cols-2">
         <div class="form-group">
@@ -190,8 +197,18 @@
 </template>
 
 <script>
+import { ref, computed } from 'vue';
+import { useStrategies } from '../composables/useStrategies';
+
 export default {
   name: 'TradingCalculator',
+  setup() {
+    const { getDefaultStrategy } = useStrategies();
+
+    return {
+      defaultStrategy: computed(() => getDefaultStrategy.value)
+    };
+  },
   data() {
     return {
       initialCapital: 5000,
