@@ -108,7 +108,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-defineProps({
+const props = defineProps({
   trades: {
     type: Array,
     required: true
@@ -139,11 +139,11 @@ const formatPrice = (price) => {
 }
 
 const formatCurrency = (value) => {
-  return new Intl.NumberFormat('es-ES', {
+  return new Intl.NumberFormat('it-IT', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'EUR',
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 4
   }).format(value)
 }
 

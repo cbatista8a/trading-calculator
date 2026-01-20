@@ -228,9 +228,9 @@ const resetToDefaults = () => {
 }
 
 const formatNumber = (num) => {
-  return new Intl.NumberFormat('es-ES', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
+  return new Intl.NumberFormat('it-IT', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 4
   }).format(num)
 }
 </script>

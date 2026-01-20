@@ -191,11 +191,11 @@ const worstTrade = computed(() => {
 })
 
 const formatCurrency = (value) => {
-  return new Intl.NumberFormat('es-ES', {
+  return new Intl.NumberFormat('it-IT', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'EUR',
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 4
   }).format(value)
 }
 </script>

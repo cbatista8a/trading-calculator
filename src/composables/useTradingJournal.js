@@ -54,14 +54,11 @@ export function useTradingJournal() {
       priceDifference = entryPrice - exitPrice
     }
 
-    // Calculate raw profit/loss (without leverage)
-    const rawPnL = priceDifference * volume
+    // Calculate profit/loss in currency units
+    // Note: leverage affects margin required, not the base P&L calculation
+    const pnLMoney = priceDifference * volume
 
-    // Calculate profit/loss with leverage
-    const pnLMoney = rawPnL * leverage
-
-    // Calculate percentage (based on entry price and volume, considering leverage)
-    const positionValue = entryPrice * volume
+    // Calculate percentage gain/loss (based on price movement)
     const pnLPercent = (priceDifference / entryPrice) * 100
 
     // Determine if trade is profitable

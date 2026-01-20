@@ -146,18 +146,18 @@ const exportData = () => {
 }
 
 const formatNumber = (num) => {
-  return new Intl.NumberFormat('es-ES', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
+  return new Intl.NumberFormat('it-IT', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 4
   }).format(num)
 }
 
 const formatCurrency = (value) => {
-  return new Intl.NumberFormat('es-ES', {
+  return new Intl.NumberFormat('it-IT', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'EUR',
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 4
   }).format(value)
 }
 

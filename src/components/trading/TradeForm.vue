@@ -149,7 +149,7 @@
         class="bg-slate-700 rounded p-4 mt-4"
       >
         <p class="text-sm font-medium text-slate-300 mb-2">Vista Previa:</p>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
           <div>
             <p class="text-slate-500">Tipo</p>
             <p class="text-white font-semibold">{{ form.operation }}</p>
@@ -175,6 +175,10 @@
             >
               {{ formatCurrency(pnLMoney) }}
             </p>
+          </div>
+          <div>
+            <p class="text-slate-500">Margen Requerido</p>
+            <p class="text-white font-semibold">{{ formatCurrency(requiredMargin) }}</p>
           </div>
         </div>
       </div>
@@ -225,7 +229,15 @@ const priceDifference = computed(() => {
 
 const pnLMoney = computed(() => {
   if (!form.volume || !form.entryPrice) return 0
-  return priceDifference.value * form.volume * form.leverage
+  // P&L se calcula sin leverage: (precio diferencia) * volumen
+  // El leverage solo afecta el margen requerido, no el P&L base
+  return priceDifference.value * form.volume
+})
+
+const requiredMargin = computed(() => {
+  if (!form.entryPrice || !form.volume || !form.leverage) return 0
+  // Margen requerido = (precio entrada * volumen) / leverage
+  return (form.entryPrice * form.volume) / form.leverage
 })
 
 const riskRewardRatio = computed(() => {
@@ -251,11 +263,11 @@ const handleSubmit = () => {
 }
 
 const formatCurrency = (value) => {
-  return new Intl.NumberFormat('es-ES', {
+  return new Intl.NumberFormat('it-IT', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'EUR',
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 4
   }).format(value)
 }
 </script>
