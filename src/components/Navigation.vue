@@ -67,7 +67,9 @@ const navigationRoutes = [
   { path: '/trading-calculator', label: 'Calculator', icon: '📊' },
   { path: '/trading-timing', label: 'Timing', icon: '🕐' },
   { path: '/strategies', label: 'Strategies', icon: '📈' },
-  { path: '/checklist', label: 'Checklist', icon: '📋' }
+  { path: '/trading-journal', label: 'Journal', icon: '📓' },
+  { path: '/checklist', label: 'Checklist', icon: '📋' },
+  { path: '/account-settings', label: 'Account', icon: '⚙️' }
 ];
 
 const isActive = (path) => {
