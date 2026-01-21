@@ -182,12 +182,12 @@ import { useAccountSettings } from '../composables/useAccountSettings'
 const { settings, updateSettings, resetSettings } = useAccountSettings()
 
 const formData = reactive({
-  amount: 10000,
-  currency: 'USD',
+  amount: 1000,
+  currency: 'EUR',
   leverages: {
-    forex: 50,
-    stock: 2,
-    crypto: 5
+    forex: 10,
+    stock: 1,
+    crypto: 10
   }
 })
 
