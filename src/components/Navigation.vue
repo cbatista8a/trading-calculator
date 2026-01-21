@@ -64,11 +64,11 @@ const route = useRoute();
 const isMobileMenuOpen = ref(false);
 
 const navigationRoutes = [
-  { path: '/calculators', label: 'Calculator', icon: '📊' },
+  { path: '/checklist', label: 'Checklist', icon: '📋' },
   { path: '/trading-timing', label: 'Timing', icon: '🕐' },
   { path: '/strategies', label: 'Strategies', icon: '📈' },
+  { path: '/calculators', label: 'Calculators', icon: '📊' },
   { path: '/trading-journal', label: 'Journal', icon: '📓' },
-  { path: '/checklist', label: 'Checklist', icon: '📋' },
   { path: '/account-settings', label: 'Account', icon: '⚙️' }
 ];
 
