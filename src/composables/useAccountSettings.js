@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue'
+import { useTradingJournal } from './useTradingJournal'
 
 const STORAGE_KEY = 'trading_account_settings'
 
@@ -29,6 +30,7 @@ function getStoredSettings() {
 
 export function useAccountSettings() {
   const settings = accountSettings
+  const { getTotalPnL } = useTradingJournal()
 
   const updateSettings = (newSettings) => {
     accountSettings.value = {
@@ -43,8 +45,25 @@ export function useAccountSettings() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(accountSettings.value))
   }
 
-  const getAccountBalance = computed(() => {
+  const updateCapitalInicial = (newAmount) => {
+    accountSettings.value.amount = newAmount
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(accountSettings.value))
+  }
+
+  // Capital Inicial - punto de partida, no cambia
+  const getCapitalInicial = computed(() => {
     return accountSettings.value.amount
+  })
+
+  // Capital Disponible - capital inicial + P&L total
+  const getCapitalDisponible = computed(() => {
+    return accountSettings.value.amount + getTotalPnL.value
+  })
+
+  // Porcentaje de cambio del capital disponible
+  const getCapitalDisponiblePercent = computed(() => {
+    if (accountSettings.value.amount === 0) return 0
+    return (getTotalPnL.value / accountSettings.value.amount) * 100
   })
 
   const getCurrency = computed(() => {
@@ -64,7 +83,10 @@ export function useAccountSettings() {
     settings,
     updateSettings,
     updateLeverage,
-    getAccountBalance,
+    updateCapitalInicial,
+    getCapitalInicial,
+    getCapitalDisponible,
+    getCapitalDisponiblePercent,
     getCurrency,
     getLeverage,
     resetSettings

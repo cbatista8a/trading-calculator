@@ -13,23 +13,24 @@
           <div class="bg-slate-800 rounded-lg border border-slate-700 p-6 shadow-xl">
             <h2 class="text-xl font-semibold text-white mb-6">Información de Cuenta</h2>
 
-            <!-- Amount -->
+            <!-- Capital Inicial -->
             <div class="mb-6">
               <label class="block text-sm font-medium text-slate-300 mb-2">
-                Capital de Trading
+                💰 Capital Inicial
               </label>
               <div class="flex items-center gap-2">
                 <input
                   v-model.number="formData.amount"
                   type="number"
                   step="100"
-                  class="flex-1 bg-slate-700 border border-slate-600 rounded px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  :disabled="hasActiveTrades"
+                  class="flex-1 bg-slate-700 border border-slate-600 rounded px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Ingresa el capital"
                 />
                 <span class="text-slate-400">{{ formData.currency }}</span>
               </div>
               <p class="mt-1 text-xs text-slate-500">
-                Capital total disponible para operar
+                {{ hasActiveTrades ? '⚠️ No editable mientras hay trades registrados' : 'Punto de partida para calcular estadísticas' }}
               </p>
             </div>
 
@@ -134,13 +135,23 @@
         <!-- Summary Card -->
         <div>
           <div class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-lg border border-blue-700 p-6 shadow-xl">
-            <h3 class="text-lg font-semibold text-white mb-4">Resumen</h3>
+            <h3 class="text-lg font-semibold text-white mb-4">Resumen de Cuenta</h3>
 
             <div class="space-y-4">
               <div class="bg-blue-700 bg-opacity-50 rounded p-4">
-                <p class="text-xs text-blue-300 mb-1">Capital Disponible</p>
+                <p class="text-xs text-blue-300 mb-1">💰 Capital Inicial</p>
                 <p class="text-2xl font-bold text-white">
                   {{ formData.currency }} {{ formatNumber(formData.amount) }}
+                </p>
+              </div>
+
+              <div class="bg-blue-600 bg-opacity-50 rounded p-4 border border-blue-500">
+                <p class="text-xs text-blue-200 mb-1">💵 Capital Disponible (Dinámico)</p>
+                <p class="text-2xl font-bold text-blue-100">
+                  {{ formData.currency }} {{ formatNumber(getCapitalDisponible) }}
+                </p>
+                <p class="text-xs text-blue-300 mt-1">
+                  {{ getCapitalDisponiblePercent >= 0 ? '+' : '' }}{{ getCapitalDisponiblePercent.toFixed(2) }}% desde capital inicial
                 </p>
               </div>
 
@@ -176,10 +187,14 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, computed } from 'vue'
 import { useAccountSettings } from '../composables/useAccountSettings'
+import { useTradingJournal } from '../composables/useTradingJournal'
 
-const { settings, updateSettings, resetSettings } = useAccountSettings()
+const { settings, updateSettings, resetSettings, getCapitalDisponible, getCapitalDisponiblePercent } = useAccountSettings()
+const { trades } = useTradingJournal()
+
+const hasActiveTrades = computed(() => trades.value && trades.value.length > 0)
 
 const formData = reactive({
   amount: 1000,

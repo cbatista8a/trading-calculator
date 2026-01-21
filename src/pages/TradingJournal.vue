@@ -24,9 +24,23 @@
 
           <div class="space-y-4">
             <div class="bg-slate-700 rounded p-4">
-              <p class="text-sm text-slate-400 mb-1">Capital</p>
+              <p class="text-sm text-slate-400 mb-1">💰 Capital Inicial</p>
               <p class="text-2xl font-bold text-white">
                 {{ accountSettings.currency }} {{ formatNumber(accountSettings.amount) }}
+              </p>
+              <p class="text-xs text-slate-500 mt-1">Punto de partida</p>
+            </div>
+
+            <div class="bg-slate-700 rounded p-4 border border-slate-600">
+              <p class="text-sm text-slate-400 mb-1">💵 Capital Disponible</p>
+              <p
+                class="text-2xl font-bold"
+                :class="capitalDisponible >= accountSettings.amount ? 'text-green-400' : 'text-red-400'"
+              >
+                {{ accountSettings.currency }} {{ formatNumber(capitalDisponible) }}
+              </p>
+              <p class="text-xs text-slate-500 mt-1">
+                {{ capitalDisponiblePercent >= 0 ? '+' : '' }}{{ Number(capitalDisponiblePercent).toFixed(2) }}% desde inicial
               </p>
             </div>
 
@@ -37,19 +51,6 @@
                 :class="totalPnL >= 0 ? 'text-green-400' : 'text-red-400'"
               >
                 {{ formatCurrency(totalPnL) }}
-              </p>
-            </div>
-
-            <div class="bg-slate-700 rounded p-4">
-              <p class="text-sm text-slate-400 mb-1">Saldo Actual (Estimado)</p>
-              <p
-                class="text-2xl font-bold"
-                :class="currentBalance >= accountSettings.amount ? 'text-green-400' : 'text-red-400'"
-              >
-                {{ accountSettings.currency }} {{ formatNumber(currentBalance) }}
-              </p>
-              <p class="text-xs text-slate-500 mt-1">
-                {{ currentBalancePercent >= 0 ? '+' : '' }}{{ currentBalancePercent.toFixed(2) }}%
               </p>
             </div>
 
@@ -91,17 +92,16 @@ import { useAccountSettings } from '../composables/useAccountSettings'
 
 const router = useRouter()
 const { trades, addTrade, deleteTrade, getTotalPnL } = useTradingJournal()
-const { settings: accountSettings } = useAccountSettings()
+const { settings: accountSettings, getCapitalDisponible, getCapitalDisponiblePercent } = useAccountSettings()
 
 const totalPnL = computed(() => getTotalPnL.value)
 
-const currentBalance = computed(() => {
-  return accountSettings.value.amount + totalPnL.value
+const capitalDisponible = computed(() => {
+  return getCapitalDisponible.value
 })
 
-const currentBalancePercent = computed(() => {
-  if (accountSettings.value.amount === 0) return 0
-  return (totalPnL.value / accountSettings.value.amount) * 100
+const capitalDisponiblePercent = computed(() => {
+  return getCapitalDisponiblePercent.value
 })
 
 const handleTradeAdded = (tradeData) => {

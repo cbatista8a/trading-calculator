@@ -199,14 +199,17 @@
 <script>
 import { ref, computed } from 'vue';
 import { useStrategies } from '../composables/useStrategies';
+import { useAccountSettings } from '../composables/useAccountSettings';
 
 export default {
   name: 'TradingCalculator',
   setup() {
     const { getDefaultStrategy } = useStrategies();
+    const { getCapitalDisponible } = useAccountSettings();
 
     return {
-      defaultStrategy: computed(() => getDefaultStrategy.value)
+      defaultStrategy: computed(() => getDefaultStrategy.value),
+      capitalDisponible: getCapitalDisponible
     };
   },
   data() {
@@ -242,7 +245,7 @@ export default {
     calculate() {
       if (!this.hasValidInputs) return;
 
-      // Calcular riesgo total en dinero
+      // Calcular riesgo total en dinero usando capital disponible
       this.riskTotalAmount = this.initialCapital * (this.riskTotalPercentage / 100);
 
       // Calcular riesgo por acción en puntos
@@ -266,7 +269,16 @@ export default {
       this.lotSize = this.riskTotalAmount / this.riskPerAction;
     }
   },
+  watch: {
+    capitalDisponible(newValue) {
+      // Actualizar el capital inicial cuando el disponible cambia
+      this.initialCapital = newValue;
+      this.calculate();
+    }
+  },
   mounted() {
+    // Inicializar con el capital disponible actual
+    this.initialCapital = this.capitalDisponible;
     this.calculate();
   }
 }
