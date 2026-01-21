@@ -64,7 +64,7 @@ const route = useRoute();
 const isMobileMenuOpen = ref(false);
 
 const navigationRoutes = [
-  { path: '/trading-calculator', label: 'Calculator', icon: '📊' },
+  { path: '/calculators', label: 'Calculator', icon: '📊' },
   { path: '/trading-timing', label: 'Timing', icon: '🕐' },
   { path: '/strategies', label: 'Strategies', icon: '📈' },
   { path: '/trading-journal', label: 'Journal', icon: '📓' },

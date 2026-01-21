@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import CalculatorHub from '../pages/CalculatorHub.vue';
 import TradingCalculator from '../components/TradingCalculator.vue';
+import ForexCalculator from '../components/calculators/ForexCalculator.vue';
+import IndicesCalculator from '../components/calculators/IndicesCalculator.vue';
+import CryptoCalculator from '../components/calculators/CryptoCalculator.vue';
 import TradingTiming from '../components/TradingTiming.vue';
 import Home from '../pages/Home.vue';
 import Checklist from '../pages/Checklist.vue';
@@ -12,6 +16,31 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/calculators',
+    name: 'Calculator Hub',
+    component: CalculatorHub
+  },
+  {
+    path: '/calculators/stock',
+    name: 'Stock Calculator',
+    component: TradingCalculator
+  },
+  {
+    path: '/calculators/forex',
+    name: 'Forex Calculator',
+    component: ForexCalculator
+  },
+  {
+    path: '/calculators/indices',
+    name: 'Indices Calculator',
+    component: IndicesCalculator
+  },
+  {
+    path: '/calculators/crypto',
+    name: 'Crypto Calculator',
+    component: CryptoCalculator
   },
   {
     path: '/trading-calculator',

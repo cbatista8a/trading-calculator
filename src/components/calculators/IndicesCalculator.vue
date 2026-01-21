@@ -1,15 +1,8 @@
 <template>
   <div class="max-w-xl mx-auto px-4 py-8 md:px-6 w-full">
     <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
-      Calculadora de Stock
+      📊 Calculadora de Índices
     </h2>
-
-    <!-- Estrategia Predeterminada Activa -->
-    <div v-if="defaultStrategy" class="bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-300 rounded-lg p-4 mb-6">
-      <p class="text-xs font-semibold text-indigo-700 mb-1">📈 ESTRATEGIA ACTIVA</p>
-      <p class="text-sm font-bold text-indigo-900">{{ defaultStrategy.name }}</p>
-      <p class="text-xs text-indigo-800 mt-1">{{ defaultStrategy.steps.length }} pasos - <router-link to="/strategies" class="font-semibold hover:underline">Ver estrategia</router-link></p>
-    </div>
 
     <div class="space-y-6 bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
       <!-- Selector de Tipo de Posición -->
@@ -36,6 +29,20 @@
         >
           📉 Short
         </button>
+      </div>
+
+      <!-- Selector de Índice -->
+      <div class="form-group md:col-span-2">
+        <label class="form-label">Índice</label>
+        <select
+          v-model="calculator.selectedIndex.value"
+          @change="calculator.calculate"
+          class="input-field"
+        >
+          <option v-for="(data, code) in calculator.indicesData" :key="code" :value="code">
+            {{ code }} - {{ data.name }} ({{ data.pointValue }}$ por punto)
+          </option>
+        </select>
       </div>
 
       <div class="grid gap-6 md:grid-cols-2">
@@ -71,35 +78,35 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="riskOperationPercentage">
-            Stop Loss (SL)
+          <label class="form-label" for="stopLossPoints">
+            Stop Loss (Puntos)
           </label>
           <input
             type="number"
-            id="riskOperationPercentage"
-            v-model.number="calculator.riskOperationPercentage.value"
+            id="stopLossPoints"
+            v-model.number="calculator.stopLossPoints.value"
             @input="calculator.calculate"
-            step="0.01"
+            step="1"
             class="input-field"
-            placeholder="0.70"
+            placeholder="50"
           >
-          <span class="form-label-addon">%</span>
+          <span class="form-label-addon">puntos</span>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="rewardOperationPercentage">
-            Take Profit (TP)
+          <label class="form-label" for="takeProfitPoints">
+            Take Profit (Puntos)
           </label>
           <input
             type="number"
-            id="rewardOperationPercentage"
-            v-model.number="calculator.rewardPercentage.value"
+            id="takeProfitPoints"
+            v-model.number="calculator.takeProfitPoints.value"
             @input="calculator.calculate"
-            step="0.01"
+            step="1"
             class="input-field"
-            placeholder="0.90"
+            placeholder="100"
           >
-          <span class="form-label-addon">%</span>
+          <span class="form-label-addon">puntos</span>
         </div>
 
         <div class="form-group">
@@ -118,8 +125,24 @@
         </div>
 
         <div class="form-group">
+          <label class="form-label" for="contracts">
+            Contratos
+          </label>
+          <input
+            type="number"
+            id="contracts"
+            v-model.number="calculator.contracts.value"
+            @input="calculator.calculate"
+            step="0.1"
+            class="input-field"
+            placeholder="1"
+          >
+          <span class="form-label-addon">contratos</span>
+        </div>
+
+        <div class="form-group">
           <label class="form-label" for="breakEvenPercentage">
-            BreakEven
+            BreakEven (%)
           </label>
           <input
             type="number"
@@ -128,25 +151,25 @@
             @input="calculator.calculate"
             step="0.01"
             class="input-field"
-            placeholder="0.60"
+            placeholder="0.50"
           >
           <span class="form-label-addon">%</span>
         </div>
 
         <div class="form-group md:col-span-2">
-          <label class="form-label" for="stockPrice">
+          <label class="form-label" for="entryPrice">
             Precio de Entrada
           </label>
           <input
             type="number"
-            id="stockPrice"
-            v-model.number="calculator.stockPrice.value"
+            id="entryPrice"
+            v-model.number="calculator.entryPrice.value"
             @input="calculator.calculate"
             step="0.01"
             class="input-field"
-            placeholder="260.00"
+            placeholder="4500"
           >
-          <span class="form-label-addon">$</span>
+          <span class="form-label-addon">puntos</span>
         </div>
       </div>
     </div>
@@ -165,23 +188,23 @@
       </h3>
 
       <div class="space-y-6">
-        <!-- Lotaje Recomendado (destacado arriba) -->
+        <!-- Contratos Recomendados -->
         <div :class="[
           'result-row p-4 rounded-xl',
           calculator.positionType.value === 'long' ? 'bg-green-50/50' : 'bg-red-50/50'
         ]">
-          <span class="result-label text-lg">Lotaje Recomendado</span>
+          <span class="result-label text-lg">Contratos Recomendados</span>
           <span :class="[
             'result-value text-3xl font-bold',
             calculator.positionType.value === 'long' ? 'text-green-600' : 'text-red-600'
           ]">
-            {{ calculator.lotSize.value.toFixed(0) }}
+            {{ calculator.recommendedContracts.value.toFixed(2) }}
           </span>
         </div>
 
         <!-- Grid de resultados en 2 columnas -->
         <div class="grid gap-4 md:grid-cols-2">
-          <!-- Riesgo Total y Riesgo por Acción -->
+          <!-- Riesgo Total y Riesgo por Punto -->
           <div class="result-row">
             <span class="result-label">Riesgo Total</span>
             <span class="result-value text-blue-600">
@@ -190,51 +213,44 @@
           </div>
 
           <div class="result-row">
-            <span class="result-label">Riesgo por Acción</span>
+            <span class="result-label">Riesgo por Punto</span>
             <span class="result-value text-blue-600">
-              {{ formatCurrency(calculator.riskPerAction.value) }}
+              {{ formatCurrency(calculator.riskPerPoint.value) }}
             </span>
           </div>
 
-          <!-- Stop Loss y Take Profit -->
+          <!-- Stop Loss y Take Profit en Puntos -->
           <div class="result-row">
             <span class="result-label">Stop Loss</span>
             <div class="flex flex-col items-end">
-              <span class="result-value text-red-600">{{ formatCurrency(calculator.stopLoss.value) }}</span>
-              <span class="text-xs text-gray-400">{{ formatNumber(calculator.riskPerAction.value) }} points</span>
+              <span class="result-value text-red-600">{{ formatNumber(calculator.stopLoss.value) }}</span>
+              <span class="text-xs text-gray-400">{{ calculator.stopLossPoints.value }} puntos | {{ formatCurrency(calculator.riskPerContract.value) }}</span>
             </div>
           </div>
 
           <div class="result-row">
             <span class="result-label">Take Profit</span>
             <div class="flex flex-col items-end">
-              <span :class="[
-                'result-value',
-                calculator.positionType.value === 'long' ? 'text-green-600' : 'text-green-600'
-              ]">{{ formatCurrency(calculator.takeProfit.value) }}</span>
-              <span class="text-xs text-gray-400">{{ formatNumber(calculator.takeProfitPoints.value) }} points</span>
+              <span class="result-value text-green-600">{{ formatNumber(calculator.takeProfit.value) }}</span>
+              <span class="text-xs text-gray-400">{{ calculator.takeProfitPoints.value }} puntos</span>
             </div>
           </div>
 
-          <!-- TP con R/R y BreakEven -->
+          <!-- TP con R:R y BreakEven -->
           <div class="result-row">
             <span class="result-label">Take Profit (R:R)</span>
             <div class="flex flex-col items-end">
-              <span :class="[
-                'result-value',
-                calculator.positionType.value === 'long' ? 'text-green-600' : 'text-green-600'
-              ]">{{ formatCurrency(calculator.takeProfitRRBased.value) }}</span>
-              <span class="text-xs text-gray-400">{{ calculator.riskRewardRatio.value }}:1</span>
+              <span class="result-value text-green-600">{{ formatNumber(calculator.takeProfitRRBased.value) }}</span>
+              <span class="text-xs text-gray-400">{{ calculator.takeProfitPointsRRBased.value }} puntos</span>
             </div>
           </div>
 
           <div class="result-row">
             <span class="result-label">BreakEven</span>
             <div class="flex flex-col items-end">
-              <span class="result-value text-blue-600">{{ formatCurrency(calculator.breakEvenPoint.value) }}</span>
+              <span class="result-value text-blue-600">{{ formatNumber(calculator.breakEvenPrice.value) }}</span>
               <span class="text-xs text-gray-400">{{ formatPercent(calculator.breakEvenPercentage.value) }}</span>
             </div>
-
           </div>
         </div>
       </div>
@@ -244,22 +260,20 @@
 
 <script>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useStrategies } from '../composables/useStrategies';
-import { useAccountSettings } from '../composables/useAccountSettings';
-import { useCurrencyFormat } from '../composables/useCurrencyFormat';
-import { useStockCalculator } from '../composables/calculators/useStockCalculator';
+import { useAccountSettings } from '../../composables/useAccountSettings';
+import { useCurrencyFormat } from '../../composables/useCurrencyFormat';
+import { useIndicesCalculator } from '../../composables/calculators/useIndicesCalculator';
 
 export default {
-  name: 'TradingCalculator',
+  name: 'IndicesCalculator',
   setup() {
-    const { getDefaultStrategy } = useStrategies();
     const { getCapitalDisponible } = useAccountSettings();
     const { formatCurrency, formatNumber, formatPercent } = useCurrencyFormat();
 
     // Inicializar calculator con capital disponible
-    const calculator = useStockCalculator(ref(getCapitalDisponible.value));
+    const calculator = useIndicesCalculator(ref(getCapitalDisponible.value));
 
-    // Watchers
+    // Watcher para capital disponible
     watch(getCapitalDisponible, (newValue) => {
       calculator.updateInitialCapital(newValue);
     });
@@ -271,7 +285,6 @@ export default {
 
     return {
       calculator,
-      defaultStrategy: computed(() => getDefaultStrategy.value),
       formatCurrency,
       formatNumber,
       formatPercent

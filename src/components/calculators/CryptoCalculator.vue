@@ -1,15 +1,8 @@
 <template>
   <div class="max-w-xl mx-auto px-4 py-8 md:px-6 w-full">
     <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
-      Calculadora de Stock
+      🪙 Calculadora de Crypto
     </h2>
-
-    <!-- Estrategia Predeterminada Activa -->
-    <div v-if="defaultStrategy" class="bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-300 rounded-lg p-4 mb-6">
-      <p class="text-xs font-semibold text-indigo-700 mb-1">📈 ESTRATEGIA ACTIVA</p>
-      <p class="text-sm font-bold text-indigo-900">{{ defaultStrategy.name }}</p>
-      <p class="text-xs text-indigo-800 mt-1">{{ defaultStrategy.steps.length }} pasos - <router-link to="/strategies" class="font-semibold hover:underline">Ver estrategia</router-link></p>
-    </div>
 
     <div class="space-y-6 bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
       <!-- Selector de Tipo de Posición -->
@@ -134,17 +127,17 @@
         </div>
 
         <div class="form-group md:col-span-2">
-          <label class="form-label" for="stockPrice">
+          <label class="form-label" for="cryptoPrice">
             Precio de Entrada
           </label>
           <input
             type="number"
-            id="stockPrice"
+            id="cryptoPrice"
             v-model.number="calculator.stockPrice.value"
             @input="calculator.calculate"
-            step="0.01"
+            step="0.0001"
             class="input-field"
-            placeholder="260.00"
+            placeholder="45250.50"
           >
           <span class="form-label-addon">$</span>
         </div>
@@ -170,18 +163,18 @@
           'result-row p-4 rounded-xl',
           calculator.positionType.value === 'long' ? 'bg-green-50/50' : 'bg-red-50/50'
         ]">
-          <span class="result-label text-lg">Lotaje Recomendado</span>
+          <span class="result-label text-lg">Cantidad Recomendada</span>
           <span :class="[
             'result-value text-3xl font-bold',
             calculator.positionType.value === 'long' ? 'text-green-600' : 'text-red-600'
           ]">
-            {{ calculator.lotSize.value.toFixed(0) }}
+            {{ calculator.lotSize.value.toFixed(4) }}
           </span>
         </div>
 
         <!-- Grid de resultados en 2 columnas -->
         <div class="grid gap-4 md:grid-cols-2">
-          <!-- Riesgo Total y Riesgo por Acción -->
+          <!-- Riesgo Total y Riesgo por Unidad -->
           <div class="result-row">
             <span class="result-label">Riesgo Total</span>
             <span class="result-value text-blue-600">
@@ -190,7 +183,7 @@
           </div>
 
           <div class="result-row">
-            <span class="result-label">Riesgo por Acción</span>
+            <span class="result-label">Riesgo por Unidad</span>
             <span class="result-value text-blue-600">
               {{ formatCurrency(calculator.riskPerAction.value) }}
             </span>
@@ -201,7 +194,7 @@
             <span class="result-label">Stop Loss</span>
             <div class="flex flex-col items-end">
               <span class="result-value text-red-600">{{ formatCurrency(calculator.stopLoss.value) }}</span>
-              <span class="text-xs text-gray-400">{{ formatNumber(calculator.riskPerAction.value) }} points</span>
+              <span class="text-xs text-gray-400">{{ formatNumber(calculator.riskPerAction.value) }} puntos</span>
             </div>
           </div>
 
@@ -212,7 +205,7 @@
                 'result-value',
                 calculator.positionType.value === 'long' ? 'text-green-600' : 'text-green-600'
               ]">{{ formatCurrency(calculator.takeProfit.value) }}</span>
-              <span class="text-xs text-gray-400">{{ formatNumber(calculator.takeProfitPoints.value) }} points</span>
+              <span class="text-xs text-gray-400">{{ formatNumber(calculator.takeProfitPoints.value) }} puntos</span>
             </div>
           </div>
 
@@ -244,15 +237,13 @@
 
 <script>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useStrategies } from '../composables/useStrategies';
-import { useAccountSettings } from '../composables/useAccountSettings';
-import { useCurrencyFormat } from '../composables/useCurrencyFormat';
-import { useStockCalculator } from '../composables/calculators/useStockCalculator';
+import { useAccountSettings } from '../../composables/useAccountSettings';
+import { useCurrencyFormat } from '../../composables/useCurrencyFormat';
+import { useStockCalculator } from '../../composables/calculators/useStockCalculator';
 
 export default {
-  name: 'TradingCalculator',
+  name: 'CryptoCalculator',
   setup() {
-    const { getDefaultStrategy } = useStrategies();
     const { getCapitalDisponible } = useAccountSettings();
     const { formatCurrency, formatNumber, formatPercent } = useCurrencyFormat();
 
@@ -271,7 +262,6 @@ export default {
 
     return {
       calculator,
-      defaultStrategy: computed(() => getDefaultStrategy.value),
       formatCurrency,
       formatNumber,
       formatPercent
