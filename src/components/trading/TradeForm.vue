@@ -197,8 +197,10 @@
 <script setup>
 import { reactive, computed } from 'vue'
 import { useAccountSettings } from '../../composables/useAccountSettings'
+import { useCurrencyFormat } from '../../composables/useCurrencyFormat'
 
 const { getLeverage } = useAccountSettings()
+const { formatCurrency } = useCurrencyFormat()
 
 const emit = defineEmits(['trade-added'])
 
@@ -262,12 +264,4 @@ const handleSubmit = () => {
   form.leverage = 1
 }
 
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('it-IT', {
-    style: 'currency',
-    currency: 'EUR',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 4
-  }).format(value)
-}
 </script>

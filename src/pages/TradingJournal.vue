@@ -40,7 +40,7 @@
                 {{ accountSettings.currency }} {{ formatNumber(capitalDisponible) }}
               </p>
               <p class="text-xs text-slate-500 mt-1">
-                {{ capitalDisponiblePercent >= 0 ? '+' : '' }}{{ Number(capitalDisponiblePercent).toFixed(2) }}% desde inicial
+                {{ capitalDisponiblePercent >= 0 ? '+' : '' }}{{ formatPercent(capitalDisponiblePercent) }} desde inicial
               </p>
             </div>
 
@@ -64,8 +64,7 @@
               <button
                 v-if="trades.length > 0"
                 @click="exportData"
-                class="w-full bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 px-4 rounded transition-colors"
-              >
+                class="w-full bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 px-4 rounded transition-colors">
                 📥 Exportar Datos
               </button>
             </div>
@@ -89,10 +88,12 @@ import TradesList from '../components/trading/TradesList.vue'
 import TradeStats from '../components/trading/TradeStats.vue'
 import { useTradingJournal } from '../composables/useTradingJournal'
 import { useAccountSettings } from '../composables/useAccountSettings'
+import { useCurrencyFormat } from '../composables/useCurrencyFormat'
 
 const router = useRouter()
 const { trades, addTrade, deleteTrade, getTotalPnL } = useTradingJournal()
 const { settings: accountSettings, getCapitalDisponible, getCapitalDisponiblePercent } = useAccountSettings()
+const { formatCurrency, formatNumber, formatPercent } = useCurrencyFormat()
 
 const totalPnL = computed(() => getTotalPnL.value)
 
@@ -143,22 +144,6 @@ const exportData = () => {
   link.click()
   document.body.removeChild(link)
   URL.revokeObjectURL(url)
-}
-
-const formatNumber = (num) => {
-  return new Intl.NumberFormat('it-IT', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 4
-  }).format(num)
-}
-
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('it-IT', {
-    style: 'currency',
-    currency: 'EUR',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 4
-  }).format(value)
 }
 
 onMounted(() => {

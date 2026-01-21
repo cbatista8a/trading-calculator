@@ -107,6 +107,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useCurrencyFormat } from '../../composables/useCurrencyFormat'
 
 const props = defineProps({
   trades: {
@@ -116,6 +117,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['trade-deleted'])
+
+const { formatCurrency, formatPrice } = useCurrencyFormat()
 
 const showWinsOnly = ref(false)
 
@@ -132,19 +135,6 @@ const deleteTradeHandler = (tradeId) => {
   if (confirm('¿Estás seguro de que deseas eliminar esta operación?')) {
     emit('trade-deleted', tradeId)
   }
-}
-
-const formatPrice = (price) => {
-  return parseFloat(price).toFixed(4)
-}
-
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('it-IT', {
-    style: 'currency',
-    currency: 'EUR',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 4
-  }).format(value)
 }
 
 const calculateRR = (trade) => {

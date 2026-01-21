@@ -151,7 +151,7 @@
                   {{ formData.currency }} {{ formatNumber(getCapitalDisponible) }}
                 </p>
                 <p class="text-xs text-blue-300 mt-1">
-                  {{ getCapitalDisponiblePercent >= 0 ? '+' : '' }}{{ getCapitalDisponiblePercent.toFixed(2) }}% desde capital inicial
+                  {{ getCapitalDisponiblePercent >= 0 ? '+' : '' }}{{ formatPercent(getCapitalDisponiblePercent) }} desde capital inicial
                 </p>
               </div>
 
@@ -190,9 +190,11 @@
 import { reactive, onMounted, computed } from 'vue'
 import { useAccountSettings } from '../composables/useAccountSettings'
 import { useTradingJournal } from '../composables/useTradingJournal'
+import { useCurrencyFormat } from '../composables/useCurrencyFormat'
 
 const { settings, updateSettings, resetSettings, getCapitalDisponible, getCapitalDisponiblePercent } = useAccountSettings()
 const { trades } = useTradingJournal()
+const { formatNumber, formatPercent } = useCurrencyFormat()
 
 const hasActiveTrades = computed(() => trades.value && trades.value.length > 0)
 
@@ -242,12 +244,6 @@ const resetToDefaults = () => {
   formData.leverages = { ...settings.value.leverages }
 }
 
-const formatNumber = (num) => {
-  return new Intl.NumberFormat('it-IT', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 4
-  }).format(num)
-}
 </script>
 
 <style scoped>

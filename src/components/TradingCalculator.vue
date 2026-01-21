@@ -147,14 +147,14 @@
           <div class="result-row">
             <span class="result-label">Riesgo Total</span>
             <span class="result-value text-blue-600">
-              ${{ riskTotalAmount.toFixed(2) }}
+              {{ formatCurrency(riskTotalAmount) }}
             </span>
           </div>
 
           <div class="result-row">
             <span class="result-label">Riesgo por Acción</span>
             <span class="result-value text-blue-600">
-              ${{ riskPerAction.toFixed(2) }}
+              {{ formatCurrency(riskPerAction) }}
             </span>
           </div>
 
@@ -162,16 +162,16 @@
           <div class="result-row">
             <span class="result-label">Stop Loss</span>
             <div class="flex flex-col items-end">
-              <span class="result-value text-red-600">${{ stopLoss.toFixed(2) }}</span>
-              <span class="text-xs text-gray-400">{{ riskPerAction.toFixed(2) }} points</span>
+              <span class="result-value text-red-600">{{ formatCurrency(stopLoss) }}</span>
+              <span class="text-xs text-gray-400">{{ formatNumber(riskPerAction) }} points</span>
             </div>
           </div>
 
           <div class="result-row">
             <span class="result-label">Take Profit</span>
             <div class="flex flex-col items-end">
-              <span class="result-value text-green-600">${{ takeProfit.toFixed(2) }}</span>
-              <span class="text-xs text-gray-400">{{ takeProfitPoints.toFixed(2) }} points</span>
+              <span class="result-value text-green-600">{{ formatCurrency(takeProfit) }}</span>
+              <span class="text-xs text-gray-400">{{ formatNumber(takeProfitPoints) }} points</span>
             </div>
           </div>
 
@@ -179,16 +179,18 @@
           <div class="result-row">
             <span class="result-label">Take Profit (R:R)</span>
             <div class="flex flex-col items-end">
-              <span class="result-value text-green-600">${{ takeProfitRRBased.toFixed(2) }}</span>
-              <span class="text-xs text-gray-400">{{ riskRewardRatio.toFixed(1) }}:1</span>
+              <span class="result-value text-green-600">{{ formatCurrency(takeProfitRRBased) }}</span>
+              <span class="text-xs text-gray-400">{{ riskRewardRatio }}:1</span>
             </div>
           </div>
 
           <div class="result-row">
             <span class="result-label">BreakEven</span>
-            <span class="result-value text-blue-600">
-              ${{ breakEvenPoint.toFixed(2) }}
-            </span>
+            <div class="flex flex-col items-end">
+              <span class="result-value text-blue-600">{{ formatCurrency(breakEvenPoint) }}</span>
+              <span class="text-xs text-gray-400">{{ formatPercent(breakEvenPercentage) }}</span>
+            </div>
+
           </div>
         </div>
       </div>
@@ -200,16 +202,21 @@
 import { ref, computed } from 'vue';
 import { useStrategies } from '../composables/useStrategies';
 import { useAccountSettings } from '../composables/useAccountSettings';
+import { useCurrencyFormat } from '../composables/useCurrencyFormat';
 
 export default {
   name: 'TradingCalculator',
   setup() {
     const { getDefaultStrategy } = useStrategies();
     const { getCapitalDisponible } = useAccountSettings();
+    const { formatCurrency, formatNumber, formatPercent } = useCurrencyFormat();
 
     return {
       defaultStrategy: computed(() => getDefaultStrategy.value),
-      capitalDisponible: getCapitalDisponible
+      capitalDisponible: getCapitalDisponible,
+      formatCurrency,
+      formatNumber,
+      formatPercent
     };
   },
   data() {

@@ -110,6 +110,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useCurrencyFormat } from '../../composables/useCurrencyFormat'
 
 const props = defineProps({
   trades: {
@@ -117,6 +118,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const { formatCurrency } = useCurrencyFormat()
 
 const totalTrades = computed(() => props.trades.length)
 
@@ -190,12 +193,4 @@ const worstTrade = computed(() => {
   )
 })
 
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('it-IT', {
-    style: 'currency',
-    currency: 'EUR',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 4
-  }).format(value)
-}
 </script>
