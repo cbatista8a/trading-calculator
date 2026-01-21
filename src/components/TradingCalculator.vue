@@ -12,6 +12,32 @@
     </div>
 
     <div class="space-y-6 bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
+      <!-- Selector de Tipo de Posición -->
+      <div class="flex gap-3 mb-4">
+        <button
+          @click="positionType = 'long'"
+          :class="[
+            'flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-200',
+            positionType === 'long'
+              ? 'bg-green-600 text-white shadow-lg'
+              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+          ]"
+        >
+          📈 Long
+        </button>
+        <button
+          @click="positionType = 'short'"
+          :class="[
+            'flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-200',
+            positionType === 'short'
+              ? 'bg-red-600 text-white shadow-lg'
+              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+          ]"
+        >
+          📉 Short
+        </button>
+      </div>
+
       <div class="grid gap-6 md:grid-cols-2">
         <div class="form-group">
           <label class="form-label" for="initialCapital">
@@ -129,14 +155,26 @@
          class="result-card transform transition-all duration-300 hover:shadow-2xl">
       <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
         <span>Resultados</span>
+        <span :class="[
+          'text-lg font-bold',
+          positionType === 'long' ? 'text-green-600' : 'text-red-600'
+        ]">
+          {{ positionType === 'long' ? '📈 Long' : '📉 Short' }}
+        </span>
         <span class="text-sm font-normal text-gray-400">(Estimados)</span>
       </h3>
 
       <div class="space-y-6">
         <!-- Lotaje Recomendado (destacado arriba) -->
-        <div class="result-row bg-blue-50/50 p-4 rounded-xl">
+        <div :class="[
+          'result-row p-4 rounded-xl',
+          positionType === 'long' ? 'bg-green-50/50' : 'bg-red-50/50'
+        ]">
           <span class="result-label text-lg">Lotaje Recomendado</span>
-          <span class="result-value text-3xl font-bold text-blue-600">
+          <span :class="[
+            'result-value text-3xl font-bold',
+            positionType === 'long' ? 'text-green-600' : 'text-red-600'
+          ]">
             {{ lotSize.toFixed(0) }}
           </span>
         </div>
@@ -170,7 +208,10 @@
           <div class="result-row">
             <span class="result-label">Take Profit</span>
             <div class="flex flex-col items-end">
-              <span class="result-value text-green-600">{{ formatCurrency(takeProfit) }}</span>
+              <span :class="[
+                'result-value',
+                positionType === 'long' ? 'text-green-600' : 'text-green-600'
+              ]">{{ formatCurrency(takeProfit) }}</span>
               <span class="text-xs text-gray-400">{{ formatNumber(takeProfitPoints) }} points</span>
             </div>
           </div>
@@ -179,7 +220,10 @@
           <div class="result-row">
             <span class="result-label">Take Profit (R:R)</span>
             <div class="flex flex-col items-end">
-              <span class="result-value text-green-600">{{ formatCurrency(takeProfitRRBased) }}</span>
+              <span :class="[
+                'result-value',
+                positionType === 'long' ? 'text-green-600' : 'text-green-600'
+              ]">{{ formatCurrency(takeProfitRRBased) }}</span>
               <span class="text-xs text-gray-400">{{ riskRewardRatio }}:1</span>
             </div>
           </div>
@@ -221,6 +265,7 @@ export default {
   },
   data() {
     return {
+      positionType: 'long', // 'long' o 'short'
       initialCapital: 5000,
       riskTotalPercentage: 1, // Porcentaje de riesgo total del capital
       riskOperationPercentage: 0.70, // Porcentaje de riesgo por operación para SL
@@ -258,21 +303,41 @@ export default {
       // Calcular riesgo por acción en puntos
       this.riskPerAction = this.stockPrice * (this.riskOperationPercentage / 100);
 
-      // Calcular Stop Loss (precio de entrada - riesgo por acción en puntos)
-      this.stopLoss = this.stockPrice - this.riskPerAction;
+      if (this.positionType === 'long') {
+        // POSICIÓN LONG: Precio sube
+        // Stop Loss: Precio Entrada - Riesgo
+        this.stopLoss = this.stockPrice - this.riskPerAction;
 
-      this.takeProfit = this.stockPrice * (1 + this.rewardPercentage / 100);
+        // Take Profit: Precio Entrada + Recompensa
+        this.takeProfit = this.stockPrice * (1 + this.rewardPercentage / 100);
 
-      this.takeProfitPoints = this.takeProfit - this.stockPrice;
+        // Puntos de Take Profit
+        this.takeProfitPoints = this.takeProfit - this.stockPrice;
 
+        // Take Profit basado en R:R
+        this.takeProfitRRBased = this.stockPrice + (this.riskPerAction * this.riskRewardRatio);
 
-      // Calcular Take Profit basado en el ratio riesgo/beneficio
-      this.takeProfitRRBased = this.stockPrice + (this.riskPerAction * this.riskRewardRatio);
+        // BreakEven
+        this.breakEvenPoint = this.stockPrice * (1 + this.breakEvenPercentage / 100);
+      } else {
+        // POSICIÓN SHORT: Precio baja
+        // Stop Loss: Precio Entrada + Riesgo
+        this.stopLoss = this.stockPrice + this.riskPerAction;
 
-      // Calcular punto de BreakEven
-      this.breakEvenPoint = this.stockPrice * (1 + this.breakEvenPercentage / 100);
+        // Take Profit: Precio Entrada - Recompensa
+        this.takeProfit = this.stockPrice * (1 - this.rewardPercentage / 100);
 
-      // Calcular Lotaje
+        // Puntos de Take Profit
+        this.takeProfitPoints = this.stockPrice - this.takeProfit;
+
+        // Take Profit basado en R:R
+        this.takeProfitRRBased = this.stockPrice - (this.riskPerAction * this.riskRewardRatio);
+
+        // BreakEven
+        this.breakEvenPoint = this.stockPrice * (1 - this.breakEvenPercentage / 100);
+      }
+
+      // Calcular Lotaje (el cálculo es igual para ambos tipos)
       this.lotSize = this.riskTotalAmount / this.riskPerAction;
     }
   },
@@ -280,6 +345,10 @@ export default {
     capitalDisponible(newValue) {
       // Actualizar el capital inicial cuando el disponible cambia
       this.initialCapital = newValue;
+      this.calculate();
+    },
+    positionType() {
+      // Recalcular cuando cambia el tipo de posición
       this.calculate();
     }
   },
